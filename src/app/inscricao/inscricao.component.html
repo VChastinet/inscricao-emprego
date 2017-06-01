@@ -1,0 +1,103 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header" data-background-color="blue">
+                    <h4 class="title">Inscrição de Emprego</h4>
+                    <p class="category">Preencha seus dados</p>
+                </div>
+                <div class="card-content">
+                    <form [formGroup]="inscricaoForm">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label class="control-label">Nome*</label>
+                                    <input type="text" class="form-control" formControlName="nome">
+                                    <div class="form-control-feedback text-danger"
+                                         *ngIf="inscricaoForm.get('nome').touched && inscricaoForm.get('nome').errors">
+                                        {{ inscricaoForm.getFirstErrorFrom('nome').replace('%s', 'Nome') }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">CPF*</label>
+                                    <input type="text" class="form-control" formControlName="cpf">
+                                    <div class="form-control-feedback text-danger"
+                                         *ngIf="inscricaoForm.get('cpf').touched && inscricaoForm.get('cpf').errors">
+                                        {{ inscricaoForm.getFirstErrorFrom('cpf').replace('%s', 'CPF') }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label">E-mail</label>
+                                    <input type="email" class="form-control" formControlName="email">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Celular</label>
+                                    <input type="text" class="form-control" formControlName="celular">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Telefone</label>
+                                    <input type="text" class="form-control" formControlName="telefone">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Habilidades Técnicas</label>
+                                    <input type="text" class="form-control" formControlName="habilidadeTecnica">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Link</label>
+                                    <input type="text" class="form-control" formControlName="link">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Experiência Profissional</label>
+                                    <input type="text" class="form-control" formControlName="experienciaProfissional">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label">Oportunidade</label>
+                                    <input type="text" class="form-control" formControlName="oportunidade">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label" for="anexo">Anexo</label>
+                                    <input type="file" class="file-loading" id="anexo" formControlName="anexo">
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-success pull-right mt-1" (click)="inscrever()">Inscrever-se</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
