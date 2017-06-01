@@ -23,7 +23,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label class="control-label">CPF*</label>
-                                    <input type="text" class="form-control" formControlName="cpf">
+                                    <input type="text" class="form-control" formControlName="cpf" [textMask]="{mask: cpfMask}">
                                     <div class="form-control-feedback text-danger"
                                          *ngIf="inscricaoForm.get('cpf').touched && inscricaoForm.get('cpf').errors">
                                         {{ inscricaoForm.getFirstErrorFrom('cpf').replace('%s', 'CPF') }}
@@ -43,13 +43,13 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label">Celular</label>
-                                    <input type="text" class="form-control" formControlName="celular">
+                                    <input type="text" class="form-control" formControlName="celular" [textMask]="{mask: celularMask}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label">Telefone</label>
-                                    <input type="text" class="form-control" formControlName="telefone">
+                                    <input type="text" class="form-control" formControlName="telefone" [textMask]="{mask: telefoneMask}">
                                 </div>
                             </div>
                         </div>

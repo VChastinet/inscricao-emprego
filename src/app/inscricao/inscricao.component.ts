@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { InscricaoService } from "./inscricao.service";
 import { InscricaoForm } from "./inscricao.form";
+import { Mask } from "../shared/mask";
 
 @Component({
     selector: 'app-inscricao',
@@ -14,6 +15,9 @@ export class InscricaoComponent {
     private router          : Router;
     private inscricaoForm   : InscricaoForm;
     private inscricaoService : InscricaoService;
+    private cpfMask = Mask.getCpf();
+    private telefoneMask = Mask.getTelefone();
+    private celularMask = Mask.getCelular();
 
     public constructor(
         router        : Router,
