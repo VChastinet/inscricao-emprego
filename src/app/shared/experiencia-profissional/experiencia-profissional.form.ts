@@ -5,6 +5,8 @@ export class ExperienciaProfissionalForm extends FormGroup{
 
     private errorMessages = {
         required: 'O campo %s é obrigatório.',
+        pattern: '%s contém valor inválido.',
+        dataMaiorDataAtual: 'A data deve ser menor do que a data atual.',
         format: '%s inválido.'
     };
 
@@ -19,9 +21,23 @@ export class ExperienciaProfissionalForm extends FormGroup{
                 return !control.value ? { 'required': true } : null;
             }])),
             dataInicio: new FormControl(null, Validators.compose([(control: FormGroup) => {
+                if (control.value && (control.value.length > 0)) {
+                    if (new RegExp(this.data.getRegexData()).test(control.value)) {
+                        return this.data.dataFormMaiorDataAtual(control.value) ? {'dataMaiorDataAtual': true} : null;
+                    }
+                    return {'pattern': true};
+                }
+
                 return !control.value ? {'required': true} : null;
             }])),
             dataFim: new FormControl(null, Validators.compose([(control: FormGroup) => {
+                if (control.value && (control.value.length > 0)) {
+                    if (new RegExp(this.data.getRegexData()).test(control.value)) {
+                        return this.data.dataFormMaiorDataAtual(control.value) ? {'dataMaiorDataAtual': true} : null;
+                    }
+                    return {'pattern': true};
+                }
+
                 return !control.value ? {'required': true} : null;
             }])),
             trabalhoAtual: new FormControl()

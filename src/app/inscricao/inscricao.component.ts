@@ -3,8 +3,9 @@ import { Router } from '@angular/router';
 import { InscricaoService } from "./inscricao.service";
 import { InscricaoForm } from "./inscricao.form";
 import { Mask } from "../shared/mask";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import {ExperienciaProfissionalForm} from "../shared/experiencia-profissional/experiencia-profissional.form";
+import { NgbModal, NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
+import { ExperienciaProfissionalForm } from "../shared/experiencia-profissional/experiencia-profissional.form";
+import { ExperienciaProfissional } from "../shared/experiencia-profissional/experiencia-profissional";
 
 @Component({
     selector: 'app-inscricao',
@@ -14,23 +15,23 @@ import {ExperienciaProfissionalForm} from "../shared/experiencia-profissional/ex
 })
 export class InscricaoComponent {
 
-    private router          : Router;
-    private inscricaoForm   : InscricaoForm;
+    private router: Router;
+    private inscricaoForm: InscricaoForm;
     private exProfissionalForm: ExperienciaProfissionalForm;
-    private inscricaoService : InscricaoService;
+    private inscricaoService: InscricaoService;
     private cpfMask = Mask.getCpf();
     private telefoneMask = Mask.getTelefone();
     private celularMask = Mask.getCelular();
     private dateMask = Mask.getData();
+    private experienciasProfissionais: Array<ExperienciaProfissional> = [];
+    private modalReferencia: NgbModalRef;
 
-    public constructor(
-        router        : Router,
-        inscricaoService: InscricaoService,
-        private modalService: NgbModal
-    ) {
-        this.router           = router;
+    public constructor(router: Router,
+                       inscricaoService: InscricaoService,
+                       private modalService: NgbModal) {
+        this.router = router;
         this.inscricaoService = inscricaoService;
-        this.inscricaoForm    = new InscricaoForm();
+        this.inscricaoForm = new InscricaoForm();
         this.exProfissionalForm = new ExperienciaProfissionalForm();
     }
 
@@ -41,10 +42,25 @@ export class InscricaoComponent {
     }
 
     public openModal(content) {
-        this.modalService.open(content, {size: 'lg'});
+        this.modalReferencia = this.modalService.open(content, {size: 'lg'});
     }
 
     public salvarExpProfissional() {
-        console.log("Entrou");
+        if (!this.exProfissionalForm.isValid()) {
+            return this.exProfissionalForm.markAllAsTouched();
+        }
+
+        let expProfissional = new ExperienciaProfissional(
+            this.exProfissionalForm.get('cargo').value,
+            this.exProfissionalForm.get('descricao').value,
+            this.exProfissionalForm.get('dataInicio').value,
+            this.exProfissionalForm.get('dataFim').value,
+            this.exProfissionalForm.get('trabalhoAtual').value
+        );
+
+        this.experienciasProfissionais.push(expProfissional);
+
+        this.inscricaoForm.get('experienciaProfissional').setValue(this.experienciasProfissionais.length + " item(s) selecionado(s).");
+        this.modalReferencia.dismiss();
     }
 }
