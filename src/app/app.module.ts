@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { TextMaskModule } from "angular2-text-mask";
 import { RouterModule } from "@angular/router";
 import { InscricaoComponent } from "./inscricao/inscricao.component";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { InscricaoComponent } from "./inscricao/inscricao.component";
         path: '',
         component: InscricaoComponent
       }
-    ])
+    ]),
+    NgbModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

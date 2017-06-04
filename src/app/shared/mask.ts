@@ -14,4 +14,9 @@ export class Mask
     {
         return [/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
     }
+
+    public static getData():Array<string|RegExp>
+    {
+        return [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/ , /\d/, /\d/, /\d/];
+    }
 }

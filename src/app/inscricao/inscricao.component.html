@@ -56,9 +56,12 @@
 
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="form-group">
+                                <div class="form-group" style="margin-bottom: 0em !important;">
                                     <label class="control-label">Habilidades Técnicas</label>
-                                    <input type="text" class="form-control" formControlName="habilidadeTecnica">
+                                </div>
+                                <div class="form-group input-group">
+                                    <input type="text" class="form-control" disabled>
+                                    <span class="input-group-btn"><button class="btn btn-warning" type="button"><i class="fa fa-plus"></i></button></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -70,22 +73,24 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
+                            <div class="col-md-6">
+                                <div class="form-group" style="margin-bottom: 0em !important;">
                                     <label class="control-label">Experiência Profissional</label>
-                                    <input type="text" class="form-control" formControlName="experienciaProfissional">
+                                </div>
+                                <div class="form-group input-group">
+                                    <input type="text" class="form-control" disabled>
+                                    <span class="input-group-btn"><button class="btn btn-warning" type="button" (click)="openModal(modalExpProfissional)"><i class="fa fa-plus"></i></button></span>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label">Oportunidade</label>
                                     <input type="text" class="form-control" formControlName="oportunidade">
                                 </div>
                             </div>
+                        </div>
 
+                        <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="control-label" for="anexo">Anexo</label>
@@ -95,9 +100,57 @@
                         </div>
 
                         <button type="submit" class="btn btn-success pull-right mt-1" (click)="inscrever()">Inscrever-se</button>
+                        <p><br/></p>
+
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<ng-template #modalExpProfissional let-c="close">
+    <div class="modal-header">
+        <h4 class="modal-title">Experiência Profissional</h4>
+        <button type="button" class="btn btn-secondary" (click)="c('Close')">Fechar</button>
+    </div>
+    <div class="modal-body" [formGroup]="exProfissionalForm">
+        <div class="form-group">
+            <div class="card-block">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Cargo" />
+                </div>
+
+                <div class="form-group">
+                    <textarea class="form-control" rows="3" placeholder="Descrição"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-3">
+                            <input class="form-control" [textMask]="{mask: dateMask}" id="form_dti" type="text" placeholder="Data ínicio">
+                        </div>
+                        <div class="col-3">
+                            <input class="form-control" [textMask]="{mask: dateMask}" id="form_dtf" type="text" placeholder="Data final">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input">
+                            Trabalho atual
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-block">
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary col-2 pull-right" (click)="salvarExpProfissional()" >Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
