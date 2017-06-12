@@ -1,0 +1,39 @@
+<div class="form-group card">
+    <div class="card-header text-center" data-background-color="blue">
+        <h4 class="title">Oportunidades de Emprego</h4>
+    </div>
+    <div class="col-6 center" [hidden]="resultadosPesquisa.length < 0">
+        <div class="card" *ngFor="let oportunidade of resultadosPesquisa">
+            <div class="card-content text-center">
+                <h3 class="title">{{ oportunidade.getTitulo() }}</h3>
+
+                <p>
+                    {{ oportunidade.getDescricao() }}
+                </p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Data Inicio: </label>
+                            {{ oportunidade.getDataInicio() }}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Data final: </label>
+                            {{ oportunidade.getDataFinal() }}
+                        </div>
+                    </div>
+                </div>
+
+                <p>
+                    <b>Qtd. Vagas: </b> {{ oportunidade.getQtdVagas() }}
+                </p>
+
+                <button type="submit" class="btn btn-success pull-right mt-1" routerLink="/inscricao" [queryParams]="{od: oportunidade.getCodigo()}">Candidatar-se
+                </button>
+                <p><br/></p>
+
+            </div>
+        </div>
+    </div>
+</div>

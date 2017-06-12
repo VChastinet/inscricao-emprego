@@ -1,0 +1,40 @@
+import {Component, OnInit} from '@angular/core';
+import {HomepageService} from "./homepage.service";
+import {Oportunidade} from "../shared/oportunidade/oportunidade";
+
+@Component({
+    selector: 'app-homepage',
+    templateUrl: './homepage.component.html',
+    styleUrls: ['./homepage.component.css'],
+    providers: [HomepageService]
+})
+export class HomepageComponent {
+    private homepageService: HomepageService;
+    private resultadosPesquisa: Array<Oportunidade> = [];
+
+    public constructor(
+        homepageService: HomepageService
+    ) {
+        this.homepageService = homepageService;
+        this.homepageService.getOportunidades().subscribe(
+            sucess => {
+                let response = sucess.json();
+
+                response.map(control => {
+                   let resultadoFormatado = new Oportunidade(
+                        control['id'],
+                        control['titulo'],
+                        control['descricao'],
+                        control['dataInicio'],
+                        control['dataFinal'],
+                        control['qtdVagas']
+                   );
+                    this.resultadosPesquisa.push(resultadoFormatado);
+                });
+            },
+            error => {
+                console.log("error", error);
+            }
+        );
+    }
+}

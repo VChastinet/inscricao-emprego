@@ -1,27 +1,18 @@
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-export class CandidatoForm extends FormGroup{
+export class HabilidadeTecnicaForm extends FormGroup{
 
     private errorMessages = {
         required: 'O campo %s é obrigatório.',
-        format: '%s inválido.'
+        click: 'O campo %s é obrigatório. Clique em adicionar.',
+        pattern: '%s contém valor inválido.',
     };
 
     public constructor() {
         super({
-            nome: new FormControl('', Validators.compose([(control: FormGroup) => {
+            descricao: new FormControl('', Validators.compose([(control: FormGroup) => {
                 return !control.value ? { 'required': true } : null;
-            }])),
-            cpf: new FormControl('', Validators.compose([(control: FormGroup) => {
-                return !control.value ? { 'required': true } : null;
-            }])),
-            email: new FormControl(),
-            celular: new FormControl(),
-            telefone: new FormControl(),
-            habilidadeTecnica: new FormControl(),
-            link: new FormControl(),
-            experienciaProfissional: new FormControl(),
-            anexo: new FormControl()
+            }]))
         });
     }
 
