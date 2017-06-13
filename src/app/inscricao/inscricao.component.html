@@ -104,7 +104,12 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="control-label" for="anexo">Anexo*</label>
-                                    <input type="file" class="file-loading" id="anexo" (change)="selecionarDocumento($event)" aria-describedby="fileHelp" required>
+                                    <input (change)="selecionarDocumento($event,'anexo')" type="file"
+                                           class="control-file" id="anexo" aria-describedby="fileHelp" />
+                                    <div class="form-control-feedback has-danger text-danger"
+                                         *ngIf="inscricaoForm.get('anexo').touched && inscricaoForm.get('anexo').errors">
+                                        {{ inscricaoForm.getFirstErrorFrom('anexo', 'anexo') }}
+                                    </div>
                                 </div>
                             </div>
                         </div>

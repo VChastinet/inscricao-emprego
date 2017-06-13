@@ -75,7 +75,7 @@ export class InscricaoComponent implements OnInit {
                 this.inscricaoForm.get('link').value,
                 this.habilidadesTecnicas,
                 this.experienciasProfissionais,
-                this.inscricaoForm.getAnexoName(),
+                this.inscricaoForm.getDataAnexo(),
             ),
             new OportunidadeInscricao(
                 this.oportunidadeId
@@ -96,8 +96,8 @@ export class InscricaoComponent implements OnInit {
 
     }
 
-    public selecionarDocumento(event) {
-        this.inscricaoForm.anexaDocumento(event);
+    public selecionarDocumento(event, control) {
+        this.inscricaoForm.anexaDocumento(event, control);
     }
 
     public openModal(content) {

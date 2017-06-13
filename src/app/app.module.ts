@@ -11,8 +11,9 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { NglModule } from 'ng-lightning/ng-lightning';
 import { HomepageComponent } from "./homepage/homepage.component";
 import { rotas } from "./app.routes";
-import {ConfirmarInscricaoComponent} from "./confirmar-inscricao/confirmar-inscricao.component";
-import {NgbdModalContent} from "./shared/modal/modal.component";
+import { ConfirmarInscricaoComponent } from "./confirmar-inscricao/confirmar-inscricao.component";
+import { NgbdModalContent } from "./shared/modal/modal.component";
+import { FileUploadModule } from "ng2-file-upload";
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import {NgbdModalContent} from "./shared/modal/modal.component";
     ]),
     NgbModule.forRoot(),
     NglModule.forRoot(),
-    rotas
+    rotas,
+    FileUploadModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

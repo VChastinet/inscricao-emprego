@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class InscricaoForm extends FormGroup{
 
     private errorMessages = {
-        formatFile: 'Todos os documentos anexados devem ser do formato PDF.',
+        formatFile: 'O documento anexado deve ser do formato DOCX.',
         pattern: '%s contém valor inválido.',
         archiveLimit: 'Tamanho máximo 5MB.',
         required: 'O campo %s é obrigatório.',
@@ -35,7 +35,8 @@ export class InscricaoForm extends FormGroup{
             }])),
             link: new FormControl(),
             experienciaProfissional: new FormControl(),
-            oportunidade: new FormControl()
+            oportunidade: new FormControl(),
+            anexo: new FormControl()
         });
     }
 
@@ -57,9 +58,29 @@ export class InscricaoForm extends FormGroup{
         return this.anexoName;
     }
 
-    public anexaDocumento(event) {
+    public anexaDocumento(event, control) {
         let arquivo = event.target.files[0];
         let self = this;
+        let reader = new FileReader();
+
+        if (arquivo.size > 5000000) {
+            self.get(control).setErrors({archiveLimit: true});
+            return null;
+        }
+
         self.anexoName = arquivo.name;
+        reader.readAsDataURL(arquivo);
+        reader.onload = function () {
+            if (/application\/vnd/.test(reader.result)) {
+                return self.get(control).setValue(reader.result.replace("data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,", ''));
+            }
+            self.get(control).setErrors({formatFile: true})
+        };
+    }
+
+    public getDataAnexo() {
+        let self = this;
+        let docFile = self.get('anexo').value;
+        return docFile;
     }
 }
