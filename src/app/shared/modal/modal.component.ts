@@ -1,5 +1,4 @@
-import { Component } from "@angular/core";
-import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { Component } from '@angular/core';
 
 @Component({
     selector: 'ngbd-modal',
@@ -11,5 +10,5 @@ export class NgbdModalContent {
     private title: string;
     private body: string;
 
-    constructor(public activeModal: NgbActiveModal) {}
+    constructor(public activeModal) {}
 }

@@ -128,7 +128,7 @@
 <ng-template #modalHabTecnica let-c="close">
     <div class="modal-header">
         <h4 class="modal-title">Habilidade Técnica</h4>
-        <button type="button" class="btn btn-secondary" (click)="c('Close')">Fechar</button>
+        <button type="button" class="btn btn-secondary" (click)="modalReferencia.hide()">Fechar</button>
     </div>
     <div class="modal-body" [formGroup]="habTecnicaForm">
         <div class="form-group">
@@ -151,10 +151,10 @@
                         </div>
                         <div class="slds-clearfix slds-p-vertical--xx-small"></div>
 
-                        <ngl-pill (nglPillRemove)="removeHabTecnica(habTecnica)" *ngFor="let habTecnica of habilidadesTecnicas">
-                            <ngl-icon category="standard" icon="account" nglPillImage></ngl-icon>
-                            <a href="javascript:void(0)">{{habTecnica.getDescricao()}}</a>
-                        </ngl-pill>
+                        <!--<ngl-pill (nglPillRemove)="removeHabTecnica(habTecnica)" *ngFor="let habTecnica of habilidadesTecnicas">-->
+                            <!--<ngl-icon category="standard" icon="account" nglPillImage></ngl-icon>-->
+                            <!--<a href="javascript:void(0)">{{habTecnica.getDescricao()}}</a>-->
+                        <!--</ngl-pill>-->
                     </div>
                 </div>
             </div>
@@ -172,7 +172,7 @@
 <ng-template #modalExpProfissional let-c="close">
     <div class="modal-header">
         <h4 class="modal-title">Experiência Profissional</h4>
-        <button type="button" class="btn btn-secondary" (click)="c('Close')">Fechar</button>
+        <button type="button" class="btn btn-secondary" (click)="modalReferencia.hide()">Fechar</button>
     </div>
     <div class="modal-body" [formGroup]="exProfissionalForm">
         <div class="form-group">

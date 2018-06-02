@@ -18,9 +18,7 @@ export class HomepageComponent {
         this.homepageService = homepageService;
         this.homepageService.getOportunidades().subscribe(
             sucess => {
-                let response = sucess.json();
-
-                response.map(control => {
+              sucess.map(control => {
                    let resultadoFormatado = new Oportunidade(
                         control['id'],
                         control['titulo'],

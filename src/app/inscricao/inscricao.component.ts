@@ -1,19 +1,20 @@
-import {Component, EventEmitter, OnInit} from '@angular/core';
-import {Router, ActivatedRoute} from '@angular/router';
-import { InscricaoService } from "./inscricao.service";
-import { InscricaoForm } from "./inscricao.form";
-import { Mask } from "../shared/mask";
-import { NgbModal, NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
-import { ExperienciaProfissionalForm } from "../shared/experiencia-profissional/experiencia-profissional.form";
-import { ExperienciaProfissional } from "../shared/experiencia-profissional/experiencia-profissional";
-import {HabilidadeTecnicaForm} from "../shared/habilidade-tecnica/habilidade-tecnica.form";
-import {HabilidadeTecnica} from "../shared/habilidade-tecnica/habilidade-tecnica";
-import {isUndefined} from "util";
-import {Inscricao} from "./inscricao";
-import {OportunidadeInscricao} from "../shared/oportunidade/oportunidade-inscricao";
-import {Candidato} from "../shared/candidato/candidato";
-import {ConfirmarInscricaoForm} from "../confirmar-inscricao/confirmar-inscricao.form";
-import {NgbdModalContent} from "../shared/modal/modal.component";
+import {Component, EventEmitter, OnInit, TemplateRef} from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { InscricaoService } from './inscricao.service';
+import { InscricaoForm } from './inscricao.form';
+import { Mask } from '../shared/mask';
+import { ExperienciaProfissionalForm } from '../shared/experiencia-profissional/experiencia-profissional.form';
+import { ExperienciaProfissional } from '../shared/experiencia-profissional/experiencia-profissional';
+import { HabilidadeTecnicaForm } from '../shared/habilidade-tecnica/habilidade-tecnica.form';
+import { HabilidadeTecnica } from '../shared/habilidade-tecnica/habilidade-tecnica';
+import { isUndefined } from 'util';
+import { Inscricao } from './inscricao';
+import { OportunidadeInscricao } from '../shared/oportunidade/oportunidade-inscricao';
+import { Candidato } from '../shared/candidato/candidato';
+import { ConfirmarInscricaoForm } from '../confirmar-inscricao/confirmar-inscricao.form';
+import { NgbdModalContent } from '../shared/modal/modal.component';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
 @Component({
     selector: 'app-inscricao',
@@ -36,15 +37,17 @@ export class InscricaoComponent implements OnInit {
     private dateMask = Mask.getData();
     private experienciasProfissionais: Array<ExperienciaProfissional> = [];
     private habilidadesTecnicas: Array<HabilidadeTecnica> = [];
-    private modalReferencia: NgbModalRef;
+    private modalReferencia: BsModalRef;
     private oportunidadeId: any;
     private inscricaoId: number;
     private inscricaoFormEvent: EventEmitter<InscricaoForm> = new EventEmitter();
 
-    public constructor(router: Router,
-                       inscricaoService: InscricaoService,
-                       activedRoute: ActivatedRoute,
-                       private modalService: NgbModal) {
+    public constructor(
+      router: Router,
+      inscricaoService: InscricaoService,
+      activedRoute: ActivatedRoute,
+      private modalService: BsModalService
+    ) {
         this.router = router;
         this.inscricaoService = inscricaoService;
         this.inscricaoForm = new InscricaoForm();
@@ -93,28 +96,27 @@ export class InscricaoComponent implements OnInit {
                 !isUndefined(erro.json()['message']) ? this.exibirMensagemDeErro(erro.json()['message']) : null;
             }
         );
-
     }
 
     public selecionarDocumento(event, control) {
         this.inscricaoForm.anexaDocumento(event, control);
     }
 
-    public openModal(content) {
-        this.modalReferencia = this.modalService.open(content, {size: 'lg'});
+    public openModal(template: TemplateRef<any>) {
+        this.modalReferencia = this.modalService.show(template);
     }
 
     public validarMsgHabTecnica(descricao: string) {
-        let jaFoiInserido = this.habilidadesTecnicas.filter(control => {
-            return control.getDescricao().trim() == descricao.trim();
+        const jaFoiInserido = this.habilidadesTecnicas.filter(control => {
+            return control.getDescricao().trim() === descricao.trim();
         }).length;
 
-        if(jaFoiInserido) {
-            alert("Habilidade técnica já inserida.");
+        if (jaFoiInserido) {
+            alert('Habilidade técnica já inserida.');
             return true;
         }
 
-        if(!descricao) {
+        if (!descricao) {
             this.habTecnicaForm.markAllAsTouched();
             return true;
         }
@@ -124,28 +126,28 @@ export class InscricaoComponent implements OnInit {
         let descricao = this.habTecnicaForm.get('descricao').value;
         let msg = this.validarMsgHabTecnica(descricao);
 
-        if(msg) { return; }
+        if (msg) { return; }
 
         let habTecnica = new HabilidadeTecnica(
             descricao
         );
 
         this.habilidadesTecnicas.push(habTecnica);
-        this.inscricaoForm.get('habilidadeTecnica').setValue(this.habilidadesTecnicas.length + " item(s) selecionado(s).");
+        this.inscricaoForm.get('habilidadeTecnica').setValue(this.habilidadesTecnicas.length + ' item(s) selecionado(s).');
     }
 
     removeHabTecnica(habTecnica: HabilidadeTecnica) {
         this.habilidadesTecnicas = this.habilidadesTecnicas.filter(_pill => _pill !== habTecnica);
-        this.inscricaoForm.get('habilidadeTecnica').setValue(this.habilidadesTecnicas.length + " item(s) selecionado(s).");
+        this.inscricaoForm.get('habilidadeTecnica').setValue(this.habilidadesTecnicas.length + ' item(s) selecionado(s).');
     }
 
     public salvarHabTecnica() {
-        if(this.habilidadesTecnicas.length <= 0) {
+        if (this.habilidadesTecnicas.length <= 0) {
             this.habTecnicaForm.get('descricao').setErrors({click: true});
             return this.habTecnicaForm.markAllAsTouched();
         }
 
-        this.modalReferencia.dismiss();
+        this.modalReferencia.hide();
     }
 
     public salvarExpProfissional() {
@@ -153,7 +155,7 @@ export class InscricaoComponent implements OnInit {
             return this.exProfissionalForm.markAllAsTouched();
         }
 
-        let expProfissional = new ExperienciaProfissional(
+        const expProfissional = new ExperienciaProfissional(
             this.exProfissionalForm.get('cargo').value,
             this.exProfissionalForm.get('descricao').value,
             this.exProfissionalForm.get('dataInicio').value,
@@ -163,8 +165,8 @@ export class InscricaoComponent implements OnInit {
 
         this.experienciasProfissionais.push(expProfissional);
 
-        this.inscricaoForm.get('experienciaProfissional').setValue(this.experienciasProfissionais.length + " item(s) selecionado(s).");
-        this.modalReferencia.dismiss();
+        this.inscricaoForm.get('experienciaProfissional').setValue(this.experienciasProfissionais.length + ' item(s) selecionado(s).');
+        this.modalReferencia.hide();
     }
 
     public confirmar() {
@@ -173,10 +175,10 @@ export class InscricaoComponent implements OnInit {
         }
 
         let body = {
-          "inscricao": {
-              "id": this.inscricaoId
+          'inscricao': {
+              'id': this.inscricaoId
           },
-          "codigoConfirmacao": this.confirmarInscricaoForm.get('codigoConfirmacao').value
+          'codigoConfirmacao': this.confirmarInscricaoForm.get('codigoConfirmacao').value
         };
 
         this.inscricaoService.confirmarInscricao(body).subscribe(
@@ -190,8 +192,8 @@ export class InscricaoComponent implements OnInit {
     }
 
     public exibirMensagemDeErro(mensagem: string){
-        let modalRef = this.modalService.open(NgbdModalContent);
-        modalRef.componentInstance.title = 'Aviso';
-        modalRef.componentInstance.body = mensagem;
+        let modalRef = this.modalService.show(NgbdModalContent);
+        // modalRef.componentInstance.title = 'Aviso';
+        // modalRef.componentInstance.body = mensagem;
     }
 }

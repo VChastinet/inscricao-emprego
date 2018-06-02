@@ -1,4 +1,5 @@
-import {Data} from "../data";
+import { Data } from '../data';
+
 export class Oportunidade {
 
     private codigo: number;
