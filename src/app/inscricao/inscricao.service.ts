@@ -13,13 +13,14 @@ export class InscricaoService {
     }
 
     public inscrever(inscricao: Inscricao): Observable<any> {
-        const resourceUrl = 'http://127.0.0.1:8000/inscricao/inscrever';
+        console.log('Inscricao', inscricao);
+        const resourceUrl = 'http://127.0.0.1:8000/api/inscricao/inscrever';
 
         return this.http.post(resourceUrl, inscricao);
     }
 
     public confirmarInscricao(body: Object): Observable<any> {
-        const resourceUrl = 'http://127.0.0.1:8000/inscricao/confirmar';
+        const resourceUrl = 'http://127.0.0.1:8000/api/inscricao/confirmar';
 
         return this.http.put(resourceUrl, body);
     }

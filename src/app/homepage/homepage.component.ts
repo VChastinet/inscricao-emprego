@@ -20,11 +20,11 @@ export class HomepageComponent {
             sucess => {
               sucess.map(control => {
                    let resultadoFormatado = new Oportunidade(
-                        control['id'],
+                        control['idOportunidade'],
                         control['titulo'],
                         control['descricao'],
-                        control['dataInicio'],
-                        control['dataFinal'],
+                        control['periodoFinal'],
+                        control['periodoInicial'],
                         control['qtdVagas']
                    );
                     this.resultadosPesquisa.push(resultadoFormatado);

@@ -87,13 +87,13 @@ export class InscricaoComponent implements OnInit {
 
         this.inscricaoService.inscrever(inscricao).subscribe(
             data => {
-                let inscricao = data.json();
+                let inscricao = data;
 
                 this.confirmarInscricaoForm.get('inscricaoId').setValue(inscricao);
                 this.inscricaoId = inscricao;
             },
             erro => {
-                !isUndefined(erro.json()['message']) ? this.exibirMensagemDeErro(erro.json()['message']) : null;
+                !isUndefined(erro['message']) ? this.exibirMensagemDeErro(erro['message']) : null;
             }
         );
     }
